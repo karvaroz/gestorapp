@@ -1,8 +1,13 @@
 ## GESTORAPP
 
+
+
 Gestorapp es un aplicativo web, principalmente de carácter académico. Cabe resaltar que, este aplicativo cuenta con ciertas funcionalidades para suplir las necesidades a nivel de automatización de la empresa Inversiones Verona (Almacén dedicado a la venta de productos de belleza).
 
 En resumidas palabras, gestorapp cuenta con diferentes CRUDs con diferentes funcionalidades.
+
+![gestorapp_logo](https://user-images.githubusercontent.com/72476418/128261053-4a82ad99-1917-4019-a48a-bdbc3f71c181.png)
+
 
 ## Herramientas Tecnológicas utilizadas para la realización de este proyecto:
 
