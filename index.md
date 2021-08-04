@@ -1,37 +1,44 @@
-## Welcome to GitHub Pages
+## GESTORAPP
 
-You can use the [editor on GitHub](https://github.com/karvaroz/gestorapp/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Gestorapp es un aplicativo web, principalmente de carácter académico. Cabe resaltar que, este aplicativo cuenta con ciertas funcionalidades para suplir las necesidades a nivel de automatización de la empresa Inversiones Verona (Almacén dedicado a la venta de productos de belleza).
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+En resumidas palabras, gestorapp cuenta con diferentes CRUDs con diferentes funcionalidades.
 
-### Markdown
+## Herramientas Tecnológicas utilizadas para la realización de este proyecto:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- Visual Studio Code
+- Javascript
+- NodeJs
+- MySQL
+- XAMPP
+- Heroku
 
-```markdown
-Syntax highlighted code block
+## Funcionalidades
+1. En este aplicativo web se puede adicionar productos a un inventario conectado a la base de datos, adicionalmente, podrán modificar y eliminarlos. 
+2. De igual forma, cuenta con un apartado de proveedores con las funcionalidades anteriores. Aquí, se vinculan otras funcionalidades como lo son facturas por pagar a proveedores y el calculo de la fecha limite de pago para obtener descuentos dependiendo de ciertos días definidos por cada proveedor. 
+3. Finalmente, de acuerdo a unos registros contables básicos dentro de la aplicación se realiza un análisis en el apartado reportes donde el usuario podrá evidenciar: los productos más demandados, los menos demandados y un gráfico de análisis de los registros en ventas. 
 
-# Header 1
-## Header 2
-### Header 3
+## Más información
 
-- Bulleted
-- List
+Este proyecto acádemico se realizó además como parte de la técnica en programación de sofwate del SENA en convenio con la Institución Universitaria Salazar y Herrera.
 
-1. Numbered
-2. List
+## Desarrolladores 
 
-**Bold** and _Italic_ and `Code` text
+- Karla Karina Vargas Ríos - Frontend Developer - Email: vargasriosk@gmail.com
+- Kevin Andrés Antares Lozano - Backend Developer - Email: dizziness1948@gmail.com
 
-[Link](url) and ![Image](src)
-```
+## Imágenes del proyecto
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Creación de Landing Page para la empresa Inversiones Verona
 
-### Jekyll Themes
+![screenshot-localhost_3000-2021 08 04-16_51_57](https://user-images.githubusercontent.com/72476418/128260079-f1c7a79c-bd6b-49a2-979c-b1c9a5028e09.png)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/karvaroz/gestorapp/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### GestorApp 
 
-### Support or Contact
+Login 
+![1](https://user-images.githubusercontent.com/72476418/128260184-f8c994a1-26ca-4200-a015-f97c20d8a10c.png)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Demás funcionalidades
+![2](https://user-images.githubusercontent.com/72476418/128260214-9dcb3524-8f9f-4d1b-ab7b-463f0de640da.png)
+
+f
