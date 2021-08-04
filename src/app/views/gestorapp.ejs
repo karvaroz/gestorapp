@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/styles.css">
+    <title>GestorApp</title>
+</head>
+
+<body>
+
+
+    <div class="container-fluid">
+        <div class="row min-vh-100 flex-column flex-md-row">
+            <aside class="col-12 col-md-3 col-xl-2 p-0  bd-dark navbar-dark bg-primary flex-shrink-1">
+                <nav class="navbar navbar-expand-md bd-dark navbar-dark bg-primary flex-md-column flex-row align-items-center py-2 text-center sticky-top"
+                    id="sidebar">
+                    <div class="text-center p-5">
+                        <img src="/resources/img/usuario.png" alt="gestorapp"
+                            class="img-fluid rounded-circle my-4 p-1 d-none d-md-block shadow">
+                        <a href="#" class="navbar-brand mx-0 font-weight-bold text-nowrap">GestorApp</a>
+                    </div>
+                    <button type="button" class="navbar-toggler border-0 order-1" data-toggle="collapse"
+                        data-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse prder-last" id="nav">
+                        <ul class="navbar-nav flex-column w-100 justify-content-center">
+                            <li class="nav-item">
+                                <a href="gestorapp" class="nav-link active">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="inventario" class="nav-link">Inventario</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="proveedores" class="nav-link">Proveedores</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="ventas" class="nav-link">Ventas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="cuentas" class="nav-link">Cuentas por Pagar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="reportes" class="nav-link">Reportes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="info" class="nav-link">Info</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </nav>
+            </aside>
+            <main class="col">
+                <div class="container mt-1 text-center">
+                    <% if(login){ %>
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                        </svg>
+                        <h2>¡Bienvenido/a, <%= name %>! </h2>
+                        <a href="logout">Cerrar sesión</a>
+                    <% } else { %>
+                        <h2><%= name %></h2>
+                        <a href="login">Ir a login</a>
+                    <% } %>
+                </div>
+                <div class="container">
+                    <div class="container">
+                        <div class="m-0 row justify-content-center">
+                            <div class="col-sm-3 p-5 ">
+                                <button class="rounded my-1 shadow-lg p-3 mb-5 bg-body rounded">
+                                    <a href="inventario"><img class="img-fluid" src="/resources/img/inventario.png"
+                                            alt="Inventario"></a>
+                                    <h4>Ver Inventario</h4>
+                                </button>
+                            </div>
+                            <div class="col-sm-3 p-5">
+                                <button class="rounded my-1 shadow-lg p-3 mb-5 bg-body rounded">
+                                    <a href="proveedores"><img class="img-fluid" src="/resources/img/proveedor.png"
+                                            alt="Proveedores"></a>
+                                    <h4>Proveedores</h4>
+                                </button>
+                            </div>
+                            <div class="col-sm-3 p-5">
+                                <button class="rounded my-1 shadow-lg p-3 mb-5 bg-body rounded">
+                                    <a href="ventas"><img class="img-fluid" src="/resources/img/venta.png" alt="Ventas"></a>
+                                    <h4>Ventas</h4>
+                                </button>
+                            </div>
+                            <div class="container">
+                                <div class="m-0 row justify-content-center">
+                                    <div class="col-sm-3 p-5">
+                                        <button class="rounded my-1 shadow-lg p-3 mb-5 bg-body rounded">
+                                            <a href="reportes"><img class="img-fluid" src="/resources/img/reportes.png"
+                                                    alt="Ventas"></a>
+                                            <h4>Reportes</h4>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </main>
+        </div>
+    </div>
+
+</body>
+
+
+</html>

@@ -1,0 +1,169 @@
+<%- include('partials/_header.ejs') %>
+
+    <div class="container-fluid mb-2">
+        <div class="row">
+            <div class="col-5 p-3">
+                <div class="card text-center shadow" style="height:150px; width:150px"><br>
+                    <div class="card-body">
+                        <p class="card-text">Total Productos</p>
+                        <h1 class="card-title"><%= inventario.length %></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-8 mt-5 text-center">
+            <table id="example" class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Nit Proveedor</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <% for (let i=0; i < inventario.length; i++) { %>
+                    <tr>
+                        <th>
+                            <%= inventario[i].codigo %>
+                        </th>
+                        <th>
+                            <%= inventario[i].producto %>
+                        </th>
+                        <th>
+                            <%= inventario[i].cantidad %>
+                        </th>
+                        <th>
+                            <%= inventario[i].precio %>
+                        </th>
+                        <th>
+                            <%= inventario[i].nit_proveedor %>
+                        </th>
+                        <th>
+                            <button type="button" class="btn" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal<%= inventario[i].codigo %>" data-bs-whatever="@fat">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="blue"
+                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fill-rule="evenodd"
+                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </svg>
+                            </button>
+                        </th>
+                        <th>
+
+                            <a href="/delete/<%= inventario[i].codigo %> ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd"
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                </svg>
+                            </a>
+                        </th>
+                    </tr>
+
+                    <div class="modal fade" id="exampleModal<%= inventario[i].codigo %>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Modificar Producto</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" action="/edit/<%=inventario[i].codigo%>">
+                                        <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Código Producto</label>
+                                            <input type="text" class="form-control" id="recipient-name" name="codigo"
+                                                value="<%= inventario[i].codigo %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">Nombre Producto</label>
+                                            <input class="form-control" id="message-text" type="text" name="producto"
+                                                value="<%= inventario[i].producto %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">Cantidad Disponible</label>
+                                            <input class="form-control" id="message-text" type="text" name="cantidad"
+                                                value="<%= inventario[i].cantidad %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">Precio Venta</label>
+                                            <input class="form-control" id="message-text" type="text" name="precio"
+                                                value="<%= inventario[i].precio %>">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-text" class="col-form-label">Nit Proveedor</label>
+                                            <input class="form-control" id="message-text" type="text"
+                                                name="nit_proveedor" value="<%= inventario[i].nit_proveedor %>">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancelar</button>
+                                            <input type="submit" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+            </table>
+        </div>
+
+
+        
+        <div class="col-4 mt-5 text-center card">
+            <form action="/add" method="post" class="card-body">
+                <h3 class="card-title text-center">Agregar Producto</h3>
+                <div class="form-group">
+                    <input type="number" name="codigo" class="form-control" placeholder="Código Producto" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="producto" class="form-control" placeholder="Nombre Producto" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="cantidad" class="form-control" placeholder="Cantidad Disponible"
+                        required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="precio" class="form-control" placeholder="Precio Venta" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="nit_proveedor" class="form-control" placeholder="Nit Proveedor" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Agregar" class="btn btn-dark btn-block mt-2">
+                </div>
+            </form>
+        </div>
+    </div>
+
+ 
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if (typeof alert !="undefined" ) {%>
+        <script>
+            Swal.fire('Eliminado Correctamente').then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+    <% } %>
+
+    <script>
+
+    </script>
+
+
+
+ <%- include('partials/_footer.ejs') %>

@@ -1,0 +1,131 @@
+<%- include('partials/_header.ejs') %>
+
+    <div class="container text-center mt-5">
+        <h1>Reportes</h1>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mt-4 text-center">
+                <div>
+                    <h4>Productos Más Demandados</h4>
+                </div>
+                <table id="example" class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                    </tr>
+                    <% for (let i=0; i < inventario.length; i++) { %>
+                        <tr>
+                            <% if (inventario[i].cantidad>= 10) { %>
+                                <th>
+                                    <%= inventario[i].codigo %>
+                                </th>
+                                <th>
+                                    <%= inventario[i].producto %>
+                                </th>
+                                <th>
+                                    <%= inventario[i].cantidad %>
+                                </th>
+
+                                <% } %>
+                        </tr>
+                        <% } %>
+
+                </table>
+            </div>
+
+            <div class="col-md-6 mt-4 text-center">
+                <div>
+                    <h4>Productos Menos Demandados</h4>
+                </div>
+                <table id="example" class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
+                    <tr>
+                        <th>ID</th>
+                        <th>Total Venta</th>
+                        <th>Fecha</th>
+                    </tr>
+                    <% for (let i=0; i < inventario.length; i++) { %>
+                        <tr>
+                            <% if (inventario[i].cantidad <=5) { %>
+                                <th>
+                                    <%= inventario[i].codigo %>
+                                </th>
+                                <th>
+                                    <%= inventario[i].producto %>
+                                </th>
+                                <th>
+                                    <%= inventario[i].cantidad %>
+                                </th>
+
+                            <% } %>
+                        </tr>
+                    <% } %>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="container fluid">
+        <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        window.addEventListener('load', setup);
+  
+        async function setup() {
+          const ctx = document.getElementById('myChart').getContext('2d');
+          const globalData = await getData();
+          const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: globalData.label,
+              datasets: [
+                {
+                  label: 'Datos',
+                  data: globalData.dataset,
+                  fill: false,
+                  backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(255, 206, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(255, 159, 64, 0.2)'
+                      ],
+                      borderColor: [
+                          'rgba(255, 99, 132, 1)',
+                          'rgba(54, 162, 235, 1)',
+                          'rgba(255, 206, 86, 1)',
+                          'rgba(75, 192, 192, 1)',
+                          'rgba(153, 102, 255, 1)',
+                          'rgba(255, 159, 64, 1)'
+                      ],
+                      borderWidth: 1
+                }
+              ]
+            },
+            options: {}
+          });
+        }
+  
+        async function getData() {
+          const response = await fetch('http://localhost:3000/ventas');
+          const data = await response.json();
+          const label = [];
+          const dataset = [];
+          
+          data.forEach(row => {
+            label.push(row.id);
+            dataset.push(parseFloat(row.ventas));
+          });
+          return { label, dataset };
+        }
+      </script>
+
+
+
+<%- include('partials/_footer.ejs') %>

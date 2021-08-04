@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/resources/css/styles.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="col-sm-4 mx-auto display align-items-center justify-content-center vh-100">
+            <div class="row">
+                <div class="card text-center shadow-lg p-3 mb-5 bg-body rounded">
+                    <div class="card-img-top">
+                        <img src="/resources/img/gestorapp_logo.png" alt="gestorapp" width="200px" height="200px">
+                    </div>
+                    <div class="card-title">
+                        <h4>Inicio de Sesión</h4>
+                    </div>
+                    <div class="card-body">
+                        <form action="auth" method="POST">
+                            <div class="form-group">
+                                <div class="control-label">Usuario</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="usuario" id="usuario"
+                                        placeholder="Administrador" autofocus required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <div class="control-label">Contraseña</div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="contrasena" id="contrasena"
+                                        autofocus required>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <div class="control-label"></div>
+                                <div class="form-group for-check">
+                                    <input type="checkbox" name="terminos" id="terminos" required>
+                                    <label for="">Acepto Términos y Condiciones</label> <br>
+                                    <a href="register">¿No tienes cuenta? Regístrate.</a>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block">Ingresar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- sweetalert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <% if(typeof alert!="undefined" ) {%>
+        <script>
+            Swal.fire({
+                title: '<%= alertTitle %>',
+                text: '<%= alertMessage %>',
+                icon: '<%= alertIcon %>',
+                showConfirmButton: '<%= showConfirmButton %>',
+                timer: '<%= timer %>'
+            }).then(() => {
+                window.location = '/<%= ruta %>'
+            })
+        </script>
+        <% }%>
+</body>
+
+</body>
+
+</html>
