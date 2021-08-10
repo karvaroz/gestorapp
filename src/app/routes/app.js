@@ -68,6 +68,25 @@ module.exports = app => {
         });
     });
 
+    app.get("/grafico", (req, res) => {
+        connection.query("SELECT * FROM ventas_diarias", (err, result) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.render("../views/grafico.ejs");
+                // res.status(200).json(result);
+            }
+            // if (err, errr) {
+            //     res.send(err);
+            // } else {
+            //     res.render("../views/reportes.ejs", {
+            //         ventas: result,
+            //     });
+            // }
+        })
+
+    });
+
     // Visualización Registro Ventas
     app.get("/ventas", (req,res) => {
         connection.query("SELECT * FROM ventas_diarias", (err, result) => {
