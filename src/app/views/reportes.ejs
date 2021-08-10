@@ -69,62 +69,61 @@
         </div>
     </div>
 
-    <div class="container fluid">
-        <canvas id="myChart" width="400" height="200"></canvas>
-    </div>
+    <h1>Datos</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
 
     <script>
-        window.addEventListener('load', setup);
-  
-        async function setup() {
-          const ctx = document.getElementById('myChart').getContext('2d');
-          const globalData = await getData();
-          const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: globalData.label,
-              datasets: [
-                {
-                  label: 'Datos',
-                  data: globalData.dataset,
-                  fill: false,
-                  backgroundColor: [
-                          'rgba(255, 99, 132, 0.2)',
-                          'rgba(54, 162, 235, 0.2)',
-                          'rgba(255, 206, 86, 0.2)',
-                          'rgba(75, 192, 192, 0.2)',
-                          'rgba(153, 102, 255, 0.2)',
-                          'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                          'rgba(255, 99, 132, 1)',
-                          'rgba(54, 162, 235, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(153, 102, 255, 1)',
-                          'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                }
-              ]
-            },
-            options: {}
-          });
-        }
-  
-        async function getData() {
-          const response = await fetch('http://localhost:3000/ventas');
-          const data = await response.json();
-          const label = [];
-          const dataset = [];
-          
-          data.forEach(row => {
-            label.push(row.id);
-            dataset.push(parseFloat(row.ventas));
-          });
-          return { label, dataset };
-        }
-      </script>
+      window.addEventListener('load', setup);
+
+      async function setup() {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const globalData = await getData();
+        const myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: globalData.label,
+            datasets: [
+              {
+                label: 'Datos',
+                data: globalData.dataset,
+                fill: false,
+                backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+              }
+            ]
+          },
+          options: {}
+        });
+      }
+
+      async function getData() {
+        const response = await fetch('http://localhost:3000/reportes');
+        const data = await response.json();
+        const label = [];
+        const dataset = [];
+        
+        data.forEach(row => {
+          label.push(row.producto);
+          dataset.push(parseFloat(row.cantidad));
+        });
+        return { label, dataset };
+      }
+    </script>
 
 
 
