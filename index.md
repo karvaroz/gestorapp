@@ -1,6 +1,3 @@
-## GESTORAPP
-
-
 
 Gestorapp es un aplicativo web, principalmente de carácter académico. Cabe resaltar que, este aplicativo cuenta con ciertas funcionalidades para suplir las necesidades a nivel de automatización de la empresa Inversiones Verona (Almacén dedicado a la venta de productos de belleza).
 
