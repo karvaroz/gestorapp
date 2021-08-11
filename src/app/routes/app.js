@@ -51,18 +51,22 @@ module.exports = app => {
             res.redirect('/')
         })
     })
+    // SELECT SUM(total_venta) AS "totalVentas_sum" FROM ventas_diarias;  
     // ORDER BY cantidad DESC LIMIT 10
     // Visualización Reportes  
     app.get("/reportes", (req, res) => {
         connection.query("SELECT * FROM inventario", (errr, results) => {
-            connection.query("SELECT SUM(total_venta) AS total_venta_sum, SUM(total_gasto) AS total_gasto_sum, SUM(total_ganancia) AS total_ganancia_sum FROM ventas_diarias", (err, result) => {
+            connection.query("SELECT SUM(total_venta) as 'ventas', SUM(total_gasto) as 'gastos', SUM(total_ganancia) as 'ganancias' FROM ventas_diarias", (err, result) => {
                 if (err, errr) {
                     res.render("../views/error.ejs");
                 } else {
                     res.render("../views/reportes.ejs", {
                         inventario: results,
                         ventas_diarias: result,
-                        // sumas: results[total_venta_sum,total_gasto_sum, total_ganancia_sum]
+                        ventas: result[0].ventas,
+                        gastos: result[0].gastos,
+                        ganancias: result[0].ganancias
+
 
                     });
                     
@@ -136,11 +140,12 @@ module.exports = app => {
     // Agregar Registro
     app.post("/addVenta", (req,res) => {
         const {id, total_venta, total_gasto, total_ganancia,fecha_creacion} = req.body;
+        const total_ganancias = total_venta - total_gasto;
         connection.query("INSERT INTO ventas_diarias SET ?" , {
             id: id,
             total_venta: total_venta,
             total_gasto: total_gasto,
-            total_ganancia: total_ganancia,
+            total_ganancia: total_ganancias,
             fecha_creacion: fecha_creacion,
 
         }, (err, result) => {
@@ -153,9 +158,9 @@ module.exports = app => {
     });
 
     // Borrar un Registro Venta
-    app.get("/deleteVenta/:id_venta", (req,res) => {
-        const id_venta = req.params.id_venta;
-        connection.query("DELETE FROM ventas_diarias WHERE id_venta = ?", [id_venta], (err, result) => {
+    app.get("/deleteVenta/:id", (req,res) => {
+        const id = req.params.id;
+        connection.query("DELETE FROM ventas_diarias WHERE id = ?", [id], (err, result) => {
             if(err){
                 res.render("../views/error.ejs");
             } else {
@@ -176,15 +181,19 @@ module.exports = app => {
     });
 
     //Editar Registro de Venta
-    app.post("/editVenta/:id_venta", (req,res) => {
-        const id_venta = req.params.id_venta;
-        const { codigo, cantidad, total_venta, fecha_creacion} = req.body
+    app.post("/editVenta/:id", (req,res) => {
+        const id = req.params.id;
+        const {  total_venta, total_gasto, total_ganancia} = req.body
+        const total_ganancias = total_venta - total_gasto;
+
         console.log(req.body);
-        connection.query("UPDATE ventas_diarias SET codigo = ?, cantidad = ?, total_venta = ?, fecha_creacion = ? WHERE id_venta = ?", [codigo, cantidad, total_venta, fecha_creacion, id_venta], (err, result) => {
+        connection.query("UPDATE ventas_diarias SET total_venta = ?, total_gasto = ?, total_ganancia = ? WHERE id = ?", [total_venta, total_gasto, total_ganancia, id], (err, result) => {
             if(err){
                 res.render("../views/error.ejs");
             } else {
                 res.redirect("/ventas");
+                total_ganancia: total_ganancias
+                
             }
         })
     }); 
@@ -247,7 +256,7 @@ module.exports = app => {
     //Editar Cuenta
     app.post("/editCuenta/:id_factura", (req,res) => {
         const id_factura = req.params.id_factura;
-        const { nit_proveedor, dias_descuento, total, estado, fecha_lim, fecha_creacion} = req.body
+        const { nit_proveedor, dias_descuento, total, estado, fecha_lim, fecha_creacion} = req.body;
         console.log(req.body);
         connection.query("UPDATE cuentas_proveedores SET nit_proveedor = ?, dias_descuento = ?, total = ?, estado = ?, fecha_lim = ?, fecha_creacion = ? WHERE id_factura = ?", [nit_proveedor, dias_descuento, total, estado, fecha_lim, fecha_creacion, id_factura], (err, result) => {
             if(err){
