@@ -20,10 +20,12 @@ Inicie el servidor de desarrollo:
 $ npm start
 
 Crear carpeta env y crear archivo .env añadir lo siguiente:
+```  
 DB_HOST = localhost
 DB_USER = user_database
 DB_PASSWORD = password_database
 DB_DATABASE = db_database
+```  
 
 ## Autores
 Karina Vargas - karvaroz
