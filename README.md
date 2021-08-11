@@ -7,17 +7,22 @@ https://karvaroz.github.io/gestorapp/
 
 ## Instalación ##
 Clona el repositorio por medio de git
-
+```  
 $ git clone https://github.com/karvaroz/gestorapp.git
-
+```  
 Ingresar al directorio clonado gestorapp
+```  
 $ cd gestorapp
+```  
 
 Instalar las dependencias para correr el server
+```  
 $ npm install
-
+```  
 Inicie el servidor de desarrollo:
+```  
 $ npm start
+```  
 
 Crear carpeta env y crear archivo .env añadir lo siguiente:
 ```  
