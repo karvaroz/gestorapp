@@ -1,58 +1,61 @@
 <%- include('partials/_header.ejs') %>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <h1>Datos</h1>
-    <canvas id="myChart" width="400" height="200"></canvas>
 
-    <script>
-      window.addEventListener('load', setup);
+  <div id="app">
+      <h3>Gráfico</h3>
+      <chart style="width: 30%; margin-left: 450px;"></chart>
+  </div>
 
-      async function setup() {
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const globalData = await getData();
-        const myChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: globalData.label,
-            datasets: [
-              {
-                label: 'Datos',
-                data: globalData.dataset,
-                fill: false,
-                backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-              }
-            ]
-          },
-          options: {}
-        });
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+
+  <script>
+    let url = 'apigrafico'
+    Vue.component('chart', {
+      extends: VueChartJs.Pie,
+      data() {
+        return {
+          id: [],
+          venta_total: [],
+          bgColors: ['#f696af', '#aa77c3', '#5d58d7', '#6165c2', '#6571ac', '#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7']
+        }
+      },
+      mounted() {
+        this.mostrar()
+        this.renderChart({
+
+          labels: this.id,
+          datasets: [
+            {
+              label: 'GRAFICOS',
+              backgroundColor: this.bgColors,
+              data: this.venta_total,
+            }
+          ]
+        }, { resposive: true, maintainAspectRadio: false })
+      },
+      methods: {
+        mostrar() {
+          axios
+            .get(url)
+            .then(response => {
+              response.data.forEach(Element => {
+                this.id.push(Element.id)
+                this.venta_total.push(Element.venta_total)
+              })
+            })
+        }
       }
 
-      async function getData() {
-        const response = await fetch('http://localhost:3000/grafico');
-        const data = await response.json();
-        const label = [];
-        const dataset = [];
-        
-        data.forEach(row => {
-          label.push(row.total_venta);
-          dataset.push(parseFloat(row.total_ganancia));
-        });
-        return { label, dataset };
-      }
-    </script>
-<%- include('partials/_footer.ejs') %>
+    })
+
+    new Vue({
+      el: '#app',
+
+    })
+  </script>
+
+
+
+  <%- include('partials/_footer.ejs') %>

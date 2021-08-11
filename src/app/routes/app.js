@@ -53,25 +53,44 @@ module.exports = app => {
     })
     // ORDER BY cantidad DESC LIMIT 10
     // Visualización Reportes  
-    app.get("/reportes", (req,res) => {
+    app.get("/reportes", (req, res) => {
         connection.query("SELECT * FROM inventario", (errr, results) => {
-            connection.query("SELECT * FROM ventas", (err, result) => {
+            connection.query("SELECT SUM(total_venta) AS total_venta_sum, SUM(total_gasto) AS total_gasto_sum, SUM(total_ganancia) AS total_ganancia_sum FROM ventas_diarias", (err, result) => {
                 if (err, errr) {
-                    res.send(err);
+                    res.render("../views/error.ejs");
                 } else {
                     res.render("../views/reportes.ejs", {
                         inventario: results,
-                        ventas: result,
+                        ventas_diarias: result,
+                        // sumas: results[total_venta_sum,total_gasto_sum, total_ganancia_sum]
+
                     });
+                    
                 }
-            })
+            });
+    
         });
     });
+
+    app.get('/error', (req, res) => {
+        res.render('../views/error.ejs');
+    })
+
+    app.get('/graficas', (req, res) => {
+        connection.query("SELECT * FROM ventas_diarias", (err, result) => {
+            if (err) {
+                res.render("../views/error.ejs");
+            } else {
+                // res.render('../views/graficas.ejs');
+                res.status(200).json(result);
+            }
+        })
+    })
 
     app.get("/grafico", (req, res) => {
         connection.query("SELECT * FROM ventas_diarias", (err, result) => {
             if (err) {
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.render("../views/grafico.ejs");
                 // res.status(200).json(result);
@@ -87,11 +106,23 @@ module.exports = app => {
 
     });
 
+    app.get("/apigrafico", (req, res) => {
+        const sql = 'SELECT * FROM ventas_diarias';
+        connection.query(sql, (error, results) => {
+            if (error) throw error;
+            if (results.length > 0) {
+                res.json(results);
+            } else {
+                res.send('not result');
+            }
+        })
+    })
+
     // Visualización Registro Ventas
     app.get("/ventas", (req,res) => {
         connection.query("SELECT * FROM ventas_diarias", (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.render("../views/ventas.ejs", {
                     ventas_diarias: result
@@ -114,7 +145,7 @@ module.exports = app => {
 
         }, (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/ventas")
             }
@@ -126,11 +157,11 @@ module.exports = app => {
         const id_venta = req.params.id_venta;
         connection.query("DELETE FROM ventas_diarias WHERE id_venta = ?", [id_venta], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 connection.query("SELECT * FROM ventas_diarias", (err, result) => {
                     if(err){
-                        res.send(err);
+                        res.render("../views/error.ejs");
                     } else {
                         res.render("../views/ventas.ejs", {
                             ventas_diarias: result,
@@ -151,7 +182,7 @@ module.exports = app => {
         console.log(req.body);
         connection.query("UPDATE ventas_diarias SET codigo = ?, cantidad = ?, total_venta = ?, fecha_creacion = ? WHERE id_venta = ?", [codigo, cantidad, total_venta, fecha_creacion, id_venta], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/ventas");
             }
@@ -162,7 +193,7 @@ module.exports = app => {
     app.get("/cuentas", (req,res) => {
         connection.query("SELECT * FROM cuentas_proveedores", (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.render("../views/cuentas.ejs", {
                     cuentas_proveedores: result
@@ -184,7 +215,7 @@ module.exports = app => {
             fecha_lim: fecha_lim,
         }, (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/cuentas")
             }
@@ -196,11 +227,11 @@ module.exports = app => {
         const id_factura = req.params.id_factura;
         connection.query("DELETE FROM cuentas_proveedores WHERE id_factura = ?", [id_factura], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 connection.query("SELECT * FROM cuentas_proveedores", (err, result) => {
                     if(err){
-                        res.send(err);
+                        res.render("../views/error.ejs");
                     } else {
                         res.render("../views/cuentas.ejs", {
                             cuentas_proveedores: result,
@@ -220,7 +251,7 @@ module.exports = app => {
         console.log(req.body);
         connection.query("UPDATE cuentas_proveedores SET nit_proveedor = ?, dias_descuento = ?, total = ?, estado = ?, fecha_lim = ?, fecha_creacion = ? WHERE id_factura = ?", [nit_proveedor, dias_descuento, total, estado, fecha_lim, fecha_creacion, id_factura], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/cuentas");
             }
@@ -232,7 +263,7 @@ module.exports = app => {
     app.get("/proveedores", (req,res) => {
         connection.query("SELECT * FROM proveedores", (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.render("../views/proveedores.ejs", {
                     proveedores: result
@@ -256,7 +287,7 @@ module.exports = app => {
             
         }, (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/proveedores")
             }
@@ -268,7 +299,7 @@ module.exports = app => {
         const nit_proveedor = req.params.nit_proveedor;
         connection.query("DELETE FROM proveedores WHERE nit_proveedor = ?", [nit_proveedor], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 connection.query("SELECT * FROM proveedores", (err, result) => {
                     if(err){
@@ -292,7 +323,7 @@ module.exports = app => {
         console.log(req.body);
         connection.query("UPDATE proveedores SET nombre = ?, codigo = ?, telefono = ?, email = ?, dias_descuento = ? WHERE nit_proveedor = ?", [nombre, codigo, telefono, email, dias_descuento, nit_proveedor], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/proveedores");
             }
@@ -304,7 +335,7 @@ module.exports = app => {
     app.get("/inventario", (req,res) => {
         connection.query("SELECT * FROM inventario", (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.render("../views/inventario.ejs", {
                     inventario: result
@@ -327,7 +358,7 @@ module.exports = app => {
             nit_proveedor:nit_proveedor
         }, (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 res.redirect("/inventario")
             }
@@ -338,11 +369,11 @@ module.exports = app => {
         const codigo = req.params.codigo;
         connection.query("DELETE FROM inventario WHERE codigo = ?", [codigo], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
             } else {
                 connection.query("SELECT * FROM inventario", (err, result) => {
                     if(err){
-                        res.send(err);
+                        res.render("../views/error.ejs");
                     } else {
                         res.render("../views/inventario.ejs", {
                             inventario: result,
@@ -362,7 +393,8 @@ module.exports = app => {
         console.log(req.body);
         connection.query("UPDATE inventario SET producto = ?, cantidad = ?, precio = ?, nit_proveedor = ? WHERE codigo = ?", [producto, cantidad, precio, nit_proveedor, codigo], (err, result) => {
             if(err){
-                res.send(err);
+                res.render("../views/error.ejs");
+
             } else {
                 res.redirect("/inventario");
             }
@@ -383,6 +415,7 @@ module.exports = app => {
             contrasena: passwordHaash
         }, async (error, results) => {
             if (error) {
+                res.render("../views/error.ejs");
                 console.log(error);
             } else {
                 res.render('../views/register.ejs', {
