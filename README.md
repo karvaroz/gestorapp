@@ -7,6 +7,7 @@ https://karvaroz.github.io/gestorapp/
 
 ## Instalación ##
 Clona el repositorio por medio de git
+
 $ git clone https://github.com/karvaroz/gestorapp.git
 
 Ingresar al directorio clonado gestorapp
