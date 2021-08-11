@@ -2,7 +2,23 @@
 
 La aplicación gestorapp hace parte de un ejercicio académico en el programa técnico en programación de software  como proyecto final en convenio SENA - IUSH, 2021.
 
+### Más información
+
+Si quieres saber más del proyecto, visita nuestra github pages. 
+
 https://karvaroz.github.io/gestorapp/
+
+## Heroku 
+
+
+Visita nuestra aplicación desplegada en Heroku con los siguientes datos. 
+
+Link: 
+
+```  
+Usuario: admin
+Contraseña: 123
+```  
 
 
 ## Instalación ##
