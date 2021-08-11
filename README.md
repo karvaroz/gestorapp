@@ -33,8 +33,8 @@ DB_DATABASE = db_database
 ```  
 
 ## Autores
-Karina Vargas - karvaroz
-Kevin Lozano - kecamaster
+- Karina Vargas 
+- Kevin Lozano 
 
 ## Licencia
 MIT License
