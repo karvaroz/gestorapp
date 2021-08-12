@@ -10,9 +10,9 @@ module.exports = app => {
     app.get('/', (req, res) => {
         console.log("Funciona");
         if (req.session.loggedin) {
-            res.render('../views/gestorapp.ejs,', {
+            res.render('../views/gestorapp.ejs', {
                 login: true,
-                name: request.session.usuario
+                name: req.session.usuario
 
             })
         } else {
@@ -454,7 +454,7 @@ module.exports = app => {
                     })
                 } else {
                     req.session.loggedin = true,
-                        req.session.usuario = results[0].usuario;
+                    req.session.usuario = results[0].usuario;
                     res.render('../views/gestorapp.ejs', {
                         alert: true,
                         alertTitle: "Ingreso Exitoso",
@@ -474,10 +474,6 @@ module.exports = app => {
 
         }
     });
-
-    app.get('/error', (req, res) => {
-        res.render('../views/error.ejs');
-    })
 
 };
 
