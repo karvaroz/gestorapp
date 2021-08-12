@@ -417,7 +417,7 @@ module.exports = app => {
             contrasena: passwordHaash
         }, async (error, results) => {
             if (error) {
-                res.render("../views/error.ejs");
+                // res.render("../views/error.ejs");
                 console.log(error);
             } else {
                 res.render('../views/register.ejs', {
