@@ -16,7 +16,7 @@ CREATE TABLE inventario (
     producto VARCHAR (90) NOT NULL,
     cantidad INT (90) NOT NULL,
     precio INT (90) NOT NULL,
-    nit_proveedor INT (90) NOT NULL FOREIGN KEY
+    nit_proveedor INT (90) NOT NULL 
 );
 
 CREATE TABLE proveedores (
