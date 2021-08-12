@@ -1,18 +1,23 @@
 <%- include('partials/_header.ejs') %>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
 
     <div class="container text-center mt-5">
         <h1>Reportes</h1>
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <div class="container">
         <div class="row">
             <div class="col-md-6 mt-4 text-center">
                 <div>
                     <h4>Productos Más Demandados</h4>
                 </div>
-                <table id="example" class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
+                <table id="example"
+                    class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
                     <tr>
                         <th>Código</th>
                         <th>Producto</th>
@@ -42,7 +47,8 @@
                 <div>
                     <h4>Productos Menos Demandados</h4>
                 </div>
-                <table id="example" class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
+                <table id="example"
+                    class="table table-responsive table-striped table-active shadow p-3 mb-5 bg-white rounded">
                     <tr>
                         <th>ID</th>
                         <th>Total Venta</th>
@@ -61,71 +67,127 @@
                                     <%= inventario[i].cantidad %>
                                 </th>
 
-                            <% } %>
+                                <% } %>
                         </tr>
-                    <% } %>
+                        <% } %>
                 </table>
             </div>
         </div>
     </div>
-
-    <div class="container fluid">
-        <canvas id="myChart" width="400" height="200"></canvas>
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <div class="col-6 col-md-4">
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h4 align="center">Ventas Acumulados</h4>
+                    </div>
+                    <div class="card-body text-dark">
+                        <h4 class="card-title" align="center">$ <%= ventas %>
+                        </h4>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card border-danger mb-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h4 align="center">Gastos Acumulados</h4>
+                    </div>
+                    <div class="card-body text-dark">
+                        <h4 class="card-title" align="center">$ <%= gastos %>
+                        </h4>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header align=" center>
+                        <h4 align="center">Ganancias Acumulados </h4>
+                    </div>
+                    <div class="card-body text-dark">
+                        <h4 class="card-title" align="center">$ <%= ganancias %>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="mx-auto" style="width: 200px;">
+        <a href="grafico">
+            <button type="button" class="btn btn-dark btn-lg btn-block">
+                <h2 class="align-center">GRÁFICO </h2>
+            </button>
+        </a>
+    </div>
+    <br><br>
+    <!-- <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+        <canvas id="myChart"></canvas>
+    </div> -->
 
-    <script>
+
+
+    <!-- <script>
         window.addEventListener('load', setup);
-  
         async function setup() {
-          const ctx = document.getElementById('myChart').getContext('2d');
-          const globalData = await getData();
-          const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: globalData.label,
-              datasets: [
-                {
-                  label: 'Datos',
-                  data: globalData.dataset,
-                  fill: false,
-                  backgroundColor: [
-                          'rgba(255, 99, 132, 0.2)',
-                          'rgba(54, 162, 235, 0.2)',
-                          'rgba(255, 206, 86, 0.2)',
-                          'rgba(75, 192, 192, 0.2)',
-                          'rgba(153, 102, 255, 0.2)',
-                          'rgba(255, 159, 64, 0.2)'
-                      ],
-                      borderColor: [
-                          'rgba(255, 99, 132, 1)',
-                          'rgba(54, 162, 235, 1)',
-                          'rgba(255, 206, 86, 1)',
-                          'rgba(75, 192, 192, 1)',
-                          'rgba(153, 102, 255, 1)',
-                          'rgba(255, 159, 64, 1)'
-                      ],
-                      borderWidth: 1
-                }
-              ]
-            },
-            options: {}
-          });
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const globalData = await getData();
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: globalData.label,
+                    datasets: [
+                        {
+                            label: 'Valores Acumulados',
+                            data: globalData.dataset,
+                            fill: false,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {}
+            });
         }
-  
         async function getData() {
-          const response = await fetch('http://localhost:3000/ventas');
-          const data = await response.json();
-          const label = [];
-          const dataset = [];
-          
-          data.forEach(row => {
-            label.push(row.id);
-            dataset.push(parseFloat(row.ventas));
-          });
-          return { label, dataset };
+            const response = await fetch('http://localhost:3000/apiventas');
+            const data = await response.json();
+            const label = ['Ventas', 'Gastos', 'Ganancia'];
+            const dataset = [];
+
+            data.forEach(row => {
+                label.push(row.producto);
+                dataset.push(parseFloat(row.value));
+            });
+            // Object.keys(jsonData).forEach(function (key) {
+            //     var value = jsonData[key];
+            //     // ...
+            // });
+
+            return { label, dataset };
         }
-      </script>
+    </script> -->
 
 
 
-<%- include('partials/_footer.ejs') %>
+
+
+
+
+
+    <%- include('partials/_footer.ejs') %>

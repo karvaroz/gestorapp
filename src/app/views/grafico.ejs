@@ -1,0 +1,68 @@
+<%- include('partials/_header.ejs') %>
+
+
+
+  <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+    <h1 align="center">Gráfico</h1>
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+  <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
+
+  <script>
+    window.addEventListener('load', setup);
+    async function setup() {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const globalData = await getData();
+      const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: globalData.label,
+          datasets: [
+            {
+              label: 'Datos',
+              data: globalData.dataset,
+              fill: false,
+              backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
+            }
+          ]
+        },
+        options: {}
+      });
+    }
+    async function getData() {
+      const response = await fetch('http://localhost:3000/apigrafico');
+      const data = await response.json();
+      const label = [];
+      const dataset = [];
+      
+      data.forEach(row => {
+        label.push(row.producto);
+        dataset.push(parseFloat(row.cantidad));
+      });
+      return { label, dataset };
+    }
+  </script>
+
+
+
+  <%- include('partials/_footer.ejs') %>

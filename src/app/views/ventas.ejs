@@ -34,6 +34,7 @@
                         </thead>
                         <tbody>
                             <% for (let i=0; i < ventas_diarias.length; i++) { %>
+                                
                                 <tr class="text-center">
                                     <th>
                                         <%= ventas_diarias[i].id %>
@@ -45,7 +46,7 @@
                                         <%= ventas_diarias[i].total_gasto %>
                                     </th>  
                                     <th>
-                                        <%= ventas_diarias[i].total_ganancia = (ventas_diarias[i].total_venta) - (ventas_diarias[i].total_gasto) %>
+                                        <%= ventas_diarias[i].total_ganancia %>
 
                                     </th>                                  
                                     <th>
@@ -89,16 +90,17 @@
                                                 <form method="post" action="/editVenta/<%=ventas_diarias[i].id%>">
                                                     <div class="mb-3">
                                                         <label for="message-text"
-                                                            class="col-form-label">Total</label>
+                                                            class="col-form-label">Total Ventas</label>
                                                         <input class="form-control" id="message-text" type="text"
                                                             name="total_venta" value="<%= ventas_diarias[i].total_venta %>">
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="message-text"
-                                                            class="col-form-label">Total</label>
+                                                            class="col-form-label">Total Gastos</label>
                                                         <input class="form-control" id="message-text" type="text"
-                                                            name="total_venta" value="<%= ventas_diarias[i].total_gasto %>">
-                                                    </div>
+                                                            name="total_gasto" value="<%= ventas_diarias[i].total_gasto %>">
+                                                    </div>         
+                                      
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Cancelar</button>
@@ -109,11 +111,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <% } %>
                         </tbody>
                     </table>
                 </div>
+
 
             </div>
             <div class="col-md-3">
