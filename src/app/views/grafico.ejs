@@ -1,8 +1,10 @@
 <%- include('partials/_header.ejs') %>
 
-  <div id="app">
-      <h3>Gráfico</h3>
-      <chart style="width: 30%; margin-left: 450px;"></chart>
+
+
+  <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+    <h1 align="center">Gráfico</h1>
+    <canvas id="myChart"></canvas>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -11,49 +13,54 @@
   <script src="https://unpkg.com/vue-chartjs/dist/vue-chartjs.min.js"></script>
 
   <script>
-    let url = 'apigrafico'
-    Vue.component('chart', {
-      extends: VueChartJs.Pie,
-      data() {
-        return {
-          id: [],
-          venta_total: [],
-          bgColors: ['#f696af', '#aa77c3', '#5d58d7', '#6165c2', '#6571ac', '#FF9AA2', '#FFB7B2', '#FFDAC1', '#E2F0CB', '#B5EAD7']
-        }
-      },
-      mounted() {
-        this.mostrar()
-        this.renderChart({
-
-          labels: this.id,
+    window.addEventListener('load', setup);
+    async function setup() {
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const globalData = await getData();
+      const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: globalData.label,
           datasets: [
             {
-              label: 'GRAFICOS',
-              backgroundColor: this.bgColors,
-              data: this.venta_total,
+              label: 'Datos',
+              data: globalData.dataset,
+              fill: false,
+              backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
             }
           ]
-        }, { resposive: true, maintainAspectRadio: false })
-      },
-      methods: {
-        mostrar() {
-          axios
-            .get(url)
-            .then(response => {
-              response.data.forEach(Element => {
-                this.id.push(Element.id)
-                this.venta_total.push(Element.venta_total)
-              })
-            })
-        }
-      }
-
-    })
-
-    new Vue({
-      el: '#app',
-
-    })
+        },
+        options: {}
+      });
+    }
+    async function getData() {
+      const response = await fetch('http://localhost:3000/apigrafico');
+      const data = await response.json();
+      const label = [];
+      const dataset = [];
+      
+      data.forEach(row => {
+        label.push(row.producto);
+        dataset.push(parseFloat(row.cantidad));
+      });
+      return { label, dataset };
+    }
   </script>
 
 

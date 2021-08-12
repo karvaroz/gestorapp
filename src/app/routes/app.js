@@ -51,8 +51,7 @@ module.exports = app => {
             res.redirect('/')
         })
     })
-    // SELECT SUM(total_venta) AS "totalVentas_sum" FROM ventas_diarias;  
-    // ORDER BY cantidad DESC LIMIT 10
+
     // Visualización Reportes  
     app.get("/reportes", (req, res) => {
         connection.query("SELECT * FROM inventario", (errr, results) => {
@@ -80,38 +79,21 @@ module.exports = app => {
         res.render('../views/error.ejs');
     })
 
-    app.get('/graficas', (req, res) => {
-        connection.query("SELECT * FROM ventas_diarias", (err, result) => {
-            if (err) {
-                res.render("../views/error.ejs");
-            } else {
-                // res.render('../views/graficas.ejs');
-                res.status(200).json(result);
-            }
-        })
-    })
 
     app.get("/grafico", (req, res) => {
-        connection.query("SELECT * FROM ventas_diarias", (err, result) => {
+        connection.query("SELECT * FROM inventario", (err, result) => {
             if (err) {
                 res.render("../views/error.ejs");
             } else {
                 res.render("../views/grafico.ejs");
                 // res.status(200).json(result);
             }
-            // if (err, errr) {
-            //     res.send(err);
-            // } else {
-            //     res.render("../views/reportes.ejs", {
-            //         ventas: result,
-            //     });
-            // }
         })
 
     });
 
     app.get("/apigrafico", (req, res) => {
-        const sql = 'SELECT * FROM ventas_diarias';
+        const sql = 'SELECT * FROM inventario';
         connection.query(sql, (error, results) => {
             if (error) throw error;
             if (results.length > 0) {
@@ -121,6 +103,18 @@ module.exports = app => {
             }
         })
     })
+    app.get("/apiventas", (req, res) => {
+        const sql = "SELECT SUM(total_venta) as 'ventas', SUM(total_gasto) as 'gastos', SUM(total_ganancia) as 'ganancias' FROM ventas_diarias";
+        connection.query(sql, (error, results) => {
+            if (error) throw error;
+            if (results.length > 0) {
+                res.json(results);
+            } else {
+                res.send('not result');
+            }
+        })
+    })
+
 
     // Visualización Registro Ventas
     app.get("/ventas", (req,res) => {
@@ -183,17 +177,16 @@ module.exports = app => {
     //Editar Registro de Venta
     app.post("/editVenta/:id", (req,res) => {
         const id = req.params.id;
-        const {  total_venta, total_gasto, total_ganancia} = req.body
-        const total_ganancias = total_venta - total_gasto;
-
+        const {  total_venta, total_gasto} = req.body
+        const ganancias = total_venta - total_gasto;
         console.log(req.body);
-        connection.query("UPDATE ventas_diarias SET total_venta = ?, total_gasto = ?, total_ganancia = ? WHERE id = ?", [total_venta, total_gasto, total_ganancia, id], (err, result) => {
+        connection.query("UPDATE ventas_diarias SET total_venta = ?, total_gasto = ?, total_ganancia = ? WHERE id = ?", [total_venta, total_gasto, ganancias, id], (err, result) => {
             if(err){
                 res.render("../views/error.ejs");
             } else {
                 res.redirect("/ventas");
-                total_ganancia: total_ganancias
-                
+                console.log(result);
+                // ventas_diarias: result
             }
         })
     }); 

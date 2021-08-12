@@ -49,7 +49,7 @@
         });
       }
       async function getData() {
-        const response = await fetch('http://localhost:3000/chart');
+        const response = await fetch('http://localhost:3000/apigrafico');
         const data = await response.json();
         const label = [];
         const dataset = [];
