@@ -75,9 +75,7 @@ module.exports = app => {
         });
     });
 
-    app.get('/error', (req, res) => {
-        res.render('../views/error.ejs');
-    })
+    
 
 
     app.get("/grafico", (req, res) => {
@@ -476,6 +474,10 @@ module.exports = app => {
 
         }
     });
+
+    app.get('/error', (req, res) => {
+        res.render('../views/error.ejs');
+    })
 
 };
 
