@@ -11,7 +11,11 @@ https://karvaroz.github.io/gestorapp/
 ## Heroku 
 
 
-Visita nuestra aplicación desplegada en Heroku con los siguientes datos. 
+Visita nuestra aplicación desplegada en Heroku con los siguientes datos.
+
+https://karvaroz-gestorapp.herokuapp.com/index
+
+Utiliza los siguientes datos de acceso en la opción GestorApp
 
 Link: 
 
