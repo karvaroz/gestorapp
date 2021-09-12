@@ -121,13 +121,33 @@
                     <div class="card-body">
                         <form action="/addVenta" method="post">
                             <div class="form-group mt-2">
-                                <input type="number" name="total_venta" placeholder="Ventas del día" class="form-control"
+
+                                <!-- id_venta, codigo, cantidad, total_venta, fecha_creacion} = req.body; -->
+
+                                <input type="number" name="id_venta" placeholder="id" class="form-control"
                                     required>
                             </div>
+
                             <div class="form-group mt-2">
-                                <input type="number" name="total_gasto" placeholder="Gastos del día" class="form-control"
+                                <input type="number" name="codigo" placeholder="código" class="form-control"
+                                required>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <input type="number" name="cantidad" placeholder="cantidad de clientes" class="form-control"
                                     required>
                             </div>
+                            
+                            <div class="form-group mt-2">
+                                <input type="number" name="cantidad" placeholder="cantidad de clientes" class="form-control"
+                                    required>
+                            </div>
+
+                            <div class="form-group mt-2">
+                                <input type="total_venta" name="total_venta" placeholder="total ventas" class="form-control"
+                                    required>
+                            </div>
+                           
                             <div class="form-group mt-2 text-center">
                                 <button type="submit" class="btn btn-dark btn-block">Agregar Registro</button>
                             </div>
@@ -143,7 +163,7 @@
         <script>
             Swal.fire('Eliminado Correctamente').then(() => {
                 window.location = '/<%= ruta %>'
-            })
+            });
         </script>
         <% } %>
 
